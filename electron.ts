@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, nativeTheme } from "electron";
 import path from "path";
 
 let mainWindow: BrowserWindow | null = null;
@@ -8,6 +8,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    backgroundColor: "gray",
+    darkTheme: true,
+    // fullscreen: true,
     webPreferences: {
       nodeIntegration: false,
       preload: path.join(__dirname, "preload.js"),

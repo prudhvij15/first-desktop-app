@@ -1,46 +1,107 @@
-# Getting Started with Create React App
+# Electron + React Desktop App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This is a simple desktop application built using Electron, React, and TypeScript. It allows users to encrypt and decrypt text using a Caesar Cipher algorithm. The app features a clean, user-friendly interface styled with Tailwind CSS.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Custom Window Background Color**: Electron window uses a custom background color (`#1E1E2F`).
+- **React Frontend**: The React application runs inside the Electron window.
+- **Window Reopen Event**: Listens for an IPC event to recreate the window if closed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Prerequisites
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Make sure you have the following installed:
 
-### `npm test`
+- Node.js
+- npm or yarn
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### 1. Clone the Repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone <repository_url>
+cd <repository_name>
+2. Install Dependencies
+Install dependencies for both the Electron app and React app.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+React App
+Navigate to the react-app directory and install the dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+bash
 
-### `npm run eject`
+npm install
+3. Start the React App
+Run the React development server:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+bash
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+npm start
+Ensure it runs at http://localhost:3000.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Start the Electron App
+In a separate terminal, navigate to the Electron app directory and run:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+bash
 
-## Learn More
+npm run electron
+The Electron app should launch with the React app loaded inside the window.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Project Structure
+bash
+Copy code
+/react-app
+    /src
+        /components
+        /App.tsx
+        ...
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+electron.ts
+preload.js
+package.json
+...
+/public
+    index.html
+    ...
+package.json
+README.md
+Electron Configuration
+The Electron app is configured in electron.ts:
+
+Custom Background Color: The backgroundColor property is set to #1E1E2F.
+Preload Script: Loads the preload.js file for secure communication between the main process and renderer process.
+Example:
+
+typescript
+Copy code
+mainWindow = new BrowserWindow({
+  width: 800,
+  height: 600,
+  backgroundColor: "#1E1E2F",
+  webPreferences: {
+    nodeIntegration: false,
+    preload: path.join(__dirname, "preload.js"),
+  },
+});
+React Configuration
+Ensure the React app does not override Electron's background color by setting:
+
+css
+Copy code
+body {
+  background-color: transparent;
+}
+Available Scripts
+React App
+npm start: Starts the React development server.
+Electron App
+npm run electron: Starts the Electron app.
+Troubleshooting
+Background Color Not Displayed
+Ensure the React app has body { background-color: transparent; } in its CSS.
+Restart the app after any changes.
+React App Not Loading
+Verify the React app is running at http://localhost:3000.
+```
